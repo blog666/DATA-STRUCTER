@@ -1,14 +1,14 @@
 /*
-´ó¸Ù£º
-1¡¢ÏßÐÔ±íµÄ¶¨Òå
-1£©Ë³Ðò±íµÄ¶¨Òå
-2£©µ¥Á´±íµÄ¶¨Òå
-3£©Ë«Á´±íµÄ¶¨Òå
+å¤§çº²ï¼š
+1ã€çº¿æ€§è¡¨çš„å®šä¹‰
+1ï¼‰é¡ºåºè¡¨çš„å®šä¹‰
+2ï¼‰å•é“¾è¡¨çš„å®šä¹‰
+3ï¼‰åŒé“¾è¡¨çš„å®šä¹‰
 
-2¡¢ÏßÐÔ±íµÄ²Ù×÷
-1£©Ë³Ðò±íµÄ²Ù×÷£ºÎÞ
-2£©µ¥Á´±íµÄ²Ù×÷£ºµ¥Á´±íµÄ´´½¨£¨Í·Î²·¨£©£¬ºÏ²¢£¬²åÈëºÍÉ¾³ý½Úµã
-3£©Ë«Á´±íµÄ²Ù×÷£ºÎ²²å·¨½¨Á¢Ë«Á´±í£¬²éÕÒ½Úµã£¬²åÈë½Úµã£¬É¾³ý½Úµã
+2ã€çº¿æ€§è¡¨çš„æ“ä½œ
+1ï¼‰é¡ºåºè¡¨çš„æ“ä½œï¼šæ— 
+2ï¼‰å•é“¾è¡¨çš„æ“ä½œï¼šå•é“¾è¡¨çš„åˆ›å»ºï¼ˆå¤´å°¾æ³•ï¼‰ï¼Œåˆå¹¶ï¼Œæ’å…¥å’Œåˆ é™¤èŠ‚ç‚¹
+3ï¼‰åŒé“¾è¡¨çš„æ“ä½œï¼šå°¾æ’æ³•å»ºç«‹åŒé“¾è¡¨ï¼ŒæŸ¥æ‰¾èŠ‚ç‚¹ï¼Œæ’å…¥èŠ‚ç‚¹ï¼Œåˆ é™¤èŠ‚ç‚¹
 */
 
 
@@ -20,24 +20,24 @@ typedef struct
 {
 	int data[maxsize];
 	int length;
-}sqlist;//Ë³Ðò±íµÄ¶¨Òå
+}sqlist;//é¡ºåºè¡¨çš„å®šä¹‰
 
 
 typedef struct Lnode
 {
 	int data;
 	struct Lnode *next;
-}Lnode,*Linklist;//µ¥Á´±íµÄ¶¨Òå
+}Lnode,*Linklist;//å•é“¾è¡¨çš„å®šä¹‰
 
 typedef struct DuLnode
 {
 	int data;
 	struct DuLnode *next,*prior;
-}DuLnode,*Dulinklist;//Ë«Á´±íµÄ¶¨Òå
+}DuLnode,*Dulinklist;//åŒé“¾è¡¨çš„å®šä¹‰
 
-void creatlistR(Linklist &L,int A[],int n)//Î²²å·¨½¨Á¢µ¥Á´±í£¬AÊý×é´ú±íÔ­Êý¾Ý£¬n´ú±íÊý¾Ý×ÜÊý
+void creatlistR(Linklist &L,int A[],int n)//å°¾æ’æ³•å»ºç«‹å•é“¾è¡¨ï¼ŒAæ•°ç»„ä»£è¡¨åŽŸæ•°æ®ï¼Œnä»£è¡¨æ•°æ®æ€»æ•°
 {
-	Linklist s,r;//s´ú±íÁÙÊ±½Úµã£¬rÓÃÀ´Ö¸Ïòµ±Ç°Á´±íµÄ×îºó½Úµã
+	Linklist s,r;//sä»£è¡¨ä¸´æ—¶èŠ‚ç‚¹ï¼Œrç”¨æ¥æŒ‡å‘å½“å‰é“¾è¡¨çš„æœ€åŽèŠ‚ç‚¹
 	L=(Linklist)malloc(sizeof(Lnode));
 	L->next=NULL;
 	r=L;
@@ -51,9 +51,9 @@ void creatlistR(Linklist &L,int A[],int n)//Î²²å·¨½¨Á¢µ¥Á´±í£¬AÊý×é´ú±íÔ­Êý¾Ý£¬n
 	r->next=NULL;
 }
 
-void creatlistH(Linklist &L,int A[],int n)//Í·²å·¨½¨Á¢µ¥Á´±í
+void creatlistH(Linklist &L,int A[],int n)//å¤´æ’æ³•å»ºç«‹å•é“¾è¡¨
 {
-	Linklist s;//s´ú±íÁÙÊ±½Úµã£¬rÓÃÀ´Ö¸Ïòµ±Ç°Á´±íµÄ×îºó½Úµã
+	Linklist s;//sä»£è¡¨ä¸´æ—¶èŠ‚ç‚¹ï¼Œrç”¨æ¥æŒ‡å‘å½“å‰é“¾è¡¨çš„æœ€åŽèŠ‚ç‚¹
 	L=(Linklist)malloc(sizeof(Lnode));
 	L->next=NULL;
 	for(int i=0;i<n;++i)
@@ -65,9 +65,9 @@ void creatlistH(Linklist &L,int A[],int n)//Í·²å·¨½¨Á¢µ¥Á´±í
 	}
 }
 
-void merge(Linklist &A,Linklist &B,Linklist &C)//°ÑA,BÁ´±íºÏ²¢³Éµ¥µ÷µÝÔöÁ´±í
+void merge(Linklist &A,Linklist &B,Linklist &C)//æŠŠA,Bé“¾è¡¨åˆå¹¶æˆå•è°ƒé€’å¢žé“¾è¡¨
 {
-	Linklist p,q,r;//pÖ¸ÏòA£¬qÖ¸ÏòB£¬rÖ¸ÏòC
+	Linklist p,q,r;//pæŒ‡å‘Aï¼ŒqæŒ‡å‘Bï¼ŒræŒ‡å‘C
     p=A->next;
 	q=B->next;
 	C=A;
@@ -79,21 +79,21 @@ void merge(Linklist &A,Linklist &B,Linklist &C)//°ÑA,BÁ´±íºÏ²¢³Éµ¥µ÷µÝÔöÁ´±í
 		if(p->data>=q->data)
 		{
 			r->next=q;q=q->next;
-			r=q;
+			r=r->next;
 		}
 		else 
 		{
 			r->next=p;p=p->next;
-			r=p;
+			r=r->next;
 		}
 	}
 	if(p!=NULL)r->next=p;
 	else r->next=q;
 }
 
-void merge(Linklist &A,Linklist &B,Linklist &C)//°ÑA,BÁ´±íºÏ²¢³Éµ¥µ÷µÝ¼õÁ´±í
+void merge(Linklist &A,Linklist &B,Linklist &C)//æŠŠA,Bé“¾è¡¨åˆå¹¶æˆå•è°ƒé€’å‡é“¾è¡¨
 {
-	Linklist p,q,r;//pÖ¸ÏòA£¬qÖ¸ÏòB£¬rÖ¸ÏòC
+	Linklist p,q,r;//pæŒ‡å‘Aï¼ŒqæŒ‡å‘Bï¼ŒræŒ‡å‘C
     p=A->next;
 	q=B->next;
 	C=A;
@@ -128,20 +128,20 @@ void merge(Linklist &A,Linklist &B,Linklist &C)//°ÑA,BÁ´±íºÏ²¢³Éµ¥µ÷µÝ¼õÁ´±í
 	}
 }
 
-//É¾³ý½ÚµãµÄ²Ù×÷,¶¨Î»µ½Òª²åÈë½ÚµãµÄÇ°Ò»¸ö½áµãp
+//åˆ é™¤èŠ‚ç‚¹çš„æ“ä½œ,å®šä½åˆ°è¦æ’å…¥èŠ‚ç‚¹çš„å‰ä¸€ä¸ªç»“ç‚¹p
 /*
 q=p->next;
 p->next=p->next->next;
 free(q)
 */
 
-//²åÈë½ÚµãpµÄ²Ù×÷,¶¨Î»µ½Òª²åÈë½ÚµãµÄÇ°Ò»¸ö½áµãq
+//æ’å…¥èŠ‚ç‚¹pçš„æ“ä½œ,å®šä½åˆ°è¦æ’å…¥èŠ‚ç‚¹çš„å‰ä¸€ä¸ªç»“ç‚¹q
 /*
 p->next=q->next;
 q->next=p;
 */
 
-void creatlistDulistR(Dulinklist &L,int A[],int sum)//´´½¨Ë«Á´±í
+void creatlistDulistR(Dulinklist &L,int A[],int sum)//åˆ›å»ºåŒé“¾è¡¨
 {
 	Dulinklist s,r;
 	L=(Dulinklist)malloc(sizeof(DuLnode));
@@ -158,7 +158,7 @@ void creatlistDulistR(Dulinklist &L,int A[],int sum)//´´½¨Ë«Á´±í
 	r->next=NULL;
 }
 
-int findnode(Dulinklist &L,int x)//²éÕÒ½ÚµãµÄ²Ù×÷
+int findnode(Dulinklist &L,int x)//æŸ¥æ‰¾èŠ‚ç‚¹çš„æ“ä½œ
 {
 	Dulinklist p;
 	p=L->next;
@@ -171,8 +171,8 @@ int findnode(Dulinklist &L,int x)//²éÕÒ½ÚµãµÄ²Ù×÷
 	else return 0;
 }
 
-/*É¾³ý½Úµã£¬¿Ú¾÷£ºÏÈ½á²åÈë½ÚµãÒý³öµÄÏß£¬ÔÙ½ÓÒýÈëµÄÏß
-¼ÙÉè²åÈë½ÚµãÎªp£»Ç°Ò»¸ö½ÚµãÎªq;
+/*åˆ é™¤èŠ‚ç‚¹ï¼Œå£è¯€ï¼šå…ˆç»“æ’å…¥èŠ‚ç‚¹å¼•å‡ºçš„çº¿ï¼Œå†æŽ¥å¼•å…¥çš„çº¿
+å‡è®¾æ’å…¥èŠ‚ç‚¹ä¸ºpï¼›å‰ä¸€ä¸ªèŠ‚ç‚¹ä¸ºq;
 p->next=q->next;
 p->prior=q;
 q->next=p;
@@ -180,9 +180,9 @@ p->next->prior=p;
 */
 
 
-/*É¾³ý½ÚµãµÄ²Ù×÷
-¼ÙÉèÉ¾³ýµÄ½áµãÇ°Ò»¸ö½áµãÎªp£»
-q=p->next£»
+/*åˆ é™¤èŠ‚ç‚¹çš„æ“ä½œ
+å‡è®¾åˆ é™¤çš„ç»“ç‚¹å‰ä¸€ä¸ªç»“ç‚¹ä¸ºpï¼›
+q=p->nextï¼›
 p->next=q->next;
 q->next->prior=p;
 free(q);
