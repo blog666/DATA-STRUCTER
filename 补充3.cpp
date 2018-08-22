@@ -1,9 +1,9 @@
 /*
-PTA-�Ƿ��Ƕ���������
-�㷨������
-�Ը����Ķ������������������
-�����ǰ�ڵ�С������ǰ���ڵ㣬��ö�����
-���Ƕ���������
+PTA-是否是二叉搜索树
+算法描述：
+对给定的二叉树进行中序遍历，
+如果当前节点小于它的前驱节点，则该二叉树
+不是二叉搜索树
 */
 
 bool isBST(BinTree T)
@@ -23,9 +23,14 @@ bool isBST(BinTree T)
 
 
 /*
-PTA--�����ϸ��
-�������䣬while(newpos&&strcmp(newpos->data,key))������ȷ���,
-����newpos��strcmpһ������һֱ��ʾ�δ���
-ԭ����newpos���ڿ�ָ�����������strcmp����ǰ����newpos->data���Ƕδ���
-������Ҫ�ж�ָ���Ƿ�Ϊ�գ���Ϊ�յ���������ж���ֵ�Ƿ���ȣ�������Ҫ�����
+PTA--做题的细节
+如这个语句，while(newpos&&strcmp(newpos->data,key))这是正确语句,
+但把newpos与strcmp一交换就一直显示段错误
+原因是newpos存在空指针的情况，如果strcmp放在前面则newpos->data则是段错误
+所以先要判断指针是否为空，不为空的情况下再判断其值是否相等，先来后到要分清白
+*/
+
+/*
+pta--顺序存储的二叉树的最近的公共祖先问题
+此题难就难在测试数据的考虑全面性，容易漏掉的情况有当两个编号相等时的情况，以及当其中一个编号取1的情况
 */
