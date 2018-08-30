@@ -16,8 +16,8 @@ typedef struct
 
 typedef struct Gnode
 {
-	int vn;//����
-	int en;//������
+	int vn;//边数
+	int en;//顶点树
 	Vnode adjlist[Maxsize];
 }Gnode,*AGraph;
 void Initialize(AGraph G)
@@ -61,7 +61,7 @@ int sds_bfs(AGraph G,int v)
 	while(front!=rear)
 	{
 		front=(front+1)%Maxsize;
-		temp=queue[front];//tempΪ��������
+		temp=queue[front];//temp为弹出顶点
 		p=G->adjlist[temp].firstarc;
 		while(p!=NULL)
 		{
@@ -83,7 +83,7 @@ int sds_bfs(AGraph G,int v)
 		if(Level==six)break;
 	}
 	return count;
-}//���ȿռ����BFS�㷨���ص��Ǽ�¼���
+}//六度空间基于BFS算法，重点是记录层次
 
 void Six_Degree_of_Separation(AGraph G)
 {
@@ -95,7 +95,7 @@ void Six_Degree_of_Separation(AGraph G)
 		printf("%d: %.2f%%\n",i,100.0*(double)count/(double)G->vn);
 	}
 
-}//��ÿ�����������ȿռ��㷨
+}//对每个结点采用六度空间算法
 
 
 int main()
@@ -114,3 +114,9 @@ int main()
 	Six_Degree_of_Separation(G);
 	return 0;
 }
+
+
+/*这道题关于层数的统计方法为记录出队的元素是否与每一层最后一个结点相同
+还有一种方法为在每个节点中加入层数这个对象，但比较复杂
+emmmmmmmmmmmmmmm
+*/
