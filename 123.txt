@@ -1,0 +1,350 @@
+/****************************************
+    基于等价对的图像连通域标记算法（信标）
+*  tip:检验数据不多，bug暂未发现
+*  author:skfzg@qq.com
+*  function:1、提取輪廓2、不同目標不同標記
+**************************************/
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+int n=0;
+int ntemp=0;
+int gray_count[120][188];//灰度图像
+int Is1stRow(int x);//判断数组首行
+int Is1stofRow(int y);//判断每行第一个点
+int IsEndofRow(int y);//判断数组行尾
+int newcount[120][188];//连通域标记后的新数组
+int *new_temp;//保存领域的标志值
+int equal_pair[200];//保存等价对
+void getdata();
+void scangray();
+void deal_equal_pair(int size,int x,int y);
+void print();
+void outlineFilter();
+void centerFlag();//信标灯中心判断
+
+
+int main()
+{
+getdata();
+outlineFilter();
+scangray();//图像扫描并进行连通域标记
+print();
+centerFlag();
+return 0;
+}
+
+
+
+
+void getdata()
+{
+int i,j;
+for(i=0;i<120;++i)
+{
+for(j=0;j<188;++j)
+{
+scanf("%d",&gray_count[i][j]);
+if(gray_count[i][j]>250)gray_count[i][j]=1;
+			else gray_count[i][j]=0;
+}
+}
+}
+
+void outlineFilter()
+{
+int i,j;
+for(i=1;i<119;++i)
+{
+for(j=1;j<187;++j)
+{
+if(gray_count[i][j]==1)
+{
+if((gray_count[i-1][j]==1||gray_count[i-1][j]==-1)&&(gray_count[i+1][j]==1||gray_count[i+1][j]==-1)&&(gray_count[i][j-1]==1||gray_count[i][j-1]==-1)&&(gray_count[i][j+1]==1||gray_count[i][j+1]==-1))
+{
+gray_count[i][j]=-1;
+}
+}
+}
+}
+}
+
+
+void scangray()
+{
+int x,y;
+for(x=0;x<120;++x)
+{
+for(y=0;y<188;++y)
+{
+if(gray_count[x][y]==1)
+{
+if(Is1stRow(x)==1)
+{
+if(Is1stofRow(y)==1)
+{
+++n;
+newcount[x][y]=n;
+}
+else
+{
+if(newcount[x][y-1]!=0)
+{
+newcount[x][y]=newcount[x][y-1];
+}
+else
+{
+++n;
+newcount[x][y]=n;
+}
+}
+}
+else
+{
+if(Is1stofRow(y))
+{
+if(newcount[x-1][y]==0&&newcount[x-1][y+1]==0)
+{
+++n;
+newcount[x][y]=n;
+}
+else
+{
+if(newcount[x-1][y]!=0)
+{
+newcount[x][y]=newcount[x-1][y];
+}
+newcount[x][y]=newcount[x-1][y+1];
+deal_equal_pair(2,x,y);
+}
+}
+else
+{
+if(IsEndofRow(y))
+{
+if(newcount[x-1][y-1]==0&&newcount[x-1][y]==0&&newcount[x][y-1]==0)
+{
+++n;
+newcount[x][y]=n;
+}
+else
+{
+if(newcount[x-1][y-1]!=0)newcount[x][y]=newcount[x-1][y-1];
+if(newcount[x-1][y]!=0)newcount[x][y]=newcount[x-1][y];
+    if(newcount[x][y-1]!=0)newcount[x][y]=newcount[x][y-1];
+deal_equal_pair(3,x,y);
+}
+}
+else
+{
+if(newcount[x-1][y-1]==0&&newcount[x-1][y]==0&&newcount[x-1][y+1]==0&&newcount[x][y-1]==0)
+{
+++n;
+newcount[x][y]=n;
+}
+else
+{
+if(newcount[x-1][y-1]!=0)newcount[x][y]=newcount[x-1][y-1];
+if(newcount[x-1][y]!=0)newcount[x][y]=newcount[x-1][y];
+if(newcount[x][y-1]!=0)newcount[x][y]=newcount[x][y-1];
+if(newcount[x-1][y+1]!=0)newcount[x][y]=newcount[x-1][y+1];
+deal_equal_pair(4,x,y);
+}
+}
+}
+}
+}
+else
+{
+newcount[x][y]=0;
+}
+}
+}
+}
+
+
+
+
+int Is1stRow(int x)
+{
+	if(x==0)return 1;
+	else return 0;
+}
+
+
+int Is1stofRow(int y)
+{
+	if(y==0)return 1;
+	else return 0;
+}
+
+
+int IsEndofRow(int y)
+{
+	if(y==187)return 1;
+	else return 0;
+}
+
+
+void deal_equal_pair(int size,int x,int y)
+{
+	int i;
+	int j=0;
+	int equalnum;
+	new_temp=(int *)malloc(size*sizeof(int));
+	switch(size)
+	{
+	case 2:
+		new_temp[0]=newcount[x-1][y];
+		new_temp[1]=newcount[x-1][y+1];
+	case 3:
+		new_temp[0]=newcount[x-1][y-1];
+		new_temp[1]=newcount[x-1][y];
+		new_temp[2]=newcount[x][y-1];
+	case 4:
+		new_temp[0]=newcount[x-1][y-1];
+		new_temp[1]=newcount[x-1][y];
+		new_temp[2]=newcount[x-1][y+1];
+		new_temp[3]=newcount[x][y-1];
+	}
+	for(i=0;i<size;++i)
+	{
+		if(new_temp[i]!=0)
+		{
+			ntemp++;
+			if(new_temp[i]!=equal_pair[j])equal_pair[j++]=new_temp[i];
+		}
+	}
+	equalnum=j-1;
+	if(ntemp==2||ntemp==3||ntemp==4)
+	{
+		switch(equalnum)
+		{
+		case 2:
+			for(i=0;i<x;++i)
+			{
+				for(j=0;j<=y;++j)
+				{
+					if(newcount[i][j]==equal_pair[0]||newcount[i][j]==equal_pair[1])
+					{
+						newcount[i][j]=equal_pair[0];
+					}
+				}
+			}
+			for(j=0;j<=y;++j)
+			{
+				if(newcount[x][j]==equal_pair[0]||newcount[x][j]==equal_pair[1])
+					{
+						newcount[x][j]=equal_pair[0];
+					}
+			}
+		case 3:
+			for(i=0;i<x;++i)
+			{
+				for(j=0;j<=y;++j)
+				{
+					if(newcount[i][j]==equal_pair[0]||newcount[i][j]==equal_pair[1]||newcount[i][j]==equal_pair[2])
+					{
+						newcount[i][j]=equal_pair[0];
+					}
+				}
+			}
+			for(j=0;j<=y;++j)
+			{
+				if(newcount[x][j]==equal_pair[0]||newcount[x][j]==equal_pair[1]||newcount[x][j]==equal_pair[2])
+					{
+						newcount[x][j]=equal_pair[0];
+					}
+			}
+		case 4:
+			for(i=0;i<x;++i)
+			{
+				for(j=0;j<=y;++j)
+				{
+					if(newcount[i][j]==equal_pair[0]||newcount[i][j]==equal_pair[1]||newcount[i][j]==equal_pair[2]||newcount[i][j]==equal_pair[3])
+					{
+						newcount[i][j]=equal_pair[0];
+					}
+				}
+			}
+			for(j=0;j<=y;++j)
+			{
+				if(newcount[x][j]==equal_pair[0]||newcount[x][j]==equal_pair[1]||newcount[x][j]==equal_pair[2]||newcount[x][j]==equal_pair[3])
+					{
+						newcount[x][j]=equal_pair[0];
+					}
+			}
+		}
+	}
+}
+
+
+
+
+void print()
+{
+int i,j;
+for(i=0;i<120;++i)
+{
+for(j=0;j<188;++j)
+{
+if(newcount[i][j]!=0)printf("%d",newcount[i][j]);
+else printf(" ");
+}
+printf("\n");
+}
+}
+
+
+
+
+
+
+void centerFlag()
+{
+int F,i,j,k=0;//F表示连通域标记值
+int x,x_count=0,count_x=0;//中心坐标，采样个数，采样值
+int y,y_count=0,count_y=0;
+int point[3][2];//記錄用來比較的點
+int pointFlag=0;
+float l1,l2,l3;
+for(F=1;F<=equal_pair[0];++F)
+{
+x_count=0,count_x=0,y_count=0,count_y=0,pointFlag=0,k=0;
+for(i=0;i<120;++i)
+{
+for(j=0;j<188;++j)
+{
+if(newcount[i][j]==F){x_count++;count_x+=i;break;}
+}
+}
+x=count_x/x_count;
+for(j=0;j<188;++j)
+{
+for(i=0;i<120;++i)
+{
+if(newcount[i][j]==F){y_count++;count_y+=j;break;}
+}
+}
+y=count_y/y_count;
+for(i=0;i<120;++i)
+{
+for(j=0;j<188;++j)
+{
+if(newcount[i][j]==F)
+{
+pointFlag++;
+if(pointFlag==3||pointFlag==9||pointFlag==15){point[k++][0]=i,point[k++][1]==j;}
+}
+}
+}
+l1=float((point[0][0]-x)*(point[0][0]-x)+(point[0][1]-y)*(point[0][1]-y));
+l2=float((point[1][0]-x)*(point[1][0]-x)+(point[1][1]-y)*(point[1][1]-y));
+l3=float((point[2][0]-x)*(point[2][0]-x)+(point[2][1]-y)*(point[2][1]-y));
+if(l1/l2>=0.9&&l1/12<=1.1&&l1/l3>=0.9&&l1/13<=1.1&&l3/l2>=0.9&&l3/12<=1.1)newcount[x][y]=5;//5代表中心，误差比可以调节
+}
+
+}
