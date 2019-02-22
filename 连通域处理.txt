@@ -1,8 +1,8 @@
 /****************************************
-    »ùÓÚµÈ¼Û¶ÔµÄÍ¼ÏñÁ¬Í¨Óò±ê¼ÇËã·¨£¨ĞÅ±ê£©
-*  tip:¼ìÑéÊı¾İ²»¶à£¬bugÔİÎ´·¢ÏÖ
+    åŸºäºç­‰ä»·å¯¹çš„å›¾åƒè¿é€šåŸŸæ ‡è®°ç®—æ³•ï¼ˆä¿¡æ ‡ï¼‰
+*  tip:æ£€éªŒæ•°æ®ä¸å¤šï¼Œbugæš‚æœªå‘ç°
 *  author:skfzg@qq.com
-*  function:1¡¢ÌáÈ¡İ†Àª2¡¢²»Í¬Ä¿˜Ë²»Í¬˜ËÓ›
+*  function:1ã€æå–è¼ªå»“2ã€ä¸åŒç›®æ¨™ä¸åŒæ¨™è¨˜
 **************************************/
 
 
@@ -12,26 +12,26 @@
 
 int n=0;
 int ntemp=0;
-int gray_count[120][188];//»Ò¶ÈÍ¼Ïñ
-int Is1stRow(int x);//ÅĞ¶ÏÊı×éÊ×ĞĞ
-int Is1stofRow(int y);//ÅĞ¶ÏÃ¿ĞĞµÚÒ»¸öµã
-int IsEndofRow(int y);//ÅĞ¶ÏÊı×éĞĞÎ²
-int newcount[120][188];//Á¬Í¨Óò±ê¼ÇºóµÄĞÂÊı×é
-int *new_temp;//±£´æÁìÓòµÄ±êÖ¾Öµ
-int equal_pair[200];//±£´æµÈ¼Û¶Ô
+int gray_count[120][188];//ç°åº¦å›¾åƒ
+int Is1stRow(int x);//åˆ¤æ–­æ•°ç»„é¦–è¡Œ
+int Is1stofRow(int y);//åˆ¤æ–­æ¯è¡Œç¬¬ä¸€ä¸ªç‚¹
+int IsEndofRow(int y);//åˆ¤æ–­æ•°ç»„è¡Œå°¾
+int newcount[120][188];//è¿é€šåŸŸæ ‡è®°åçš„æ–°æ•°ç»„
+int *new_temp;//ä¿å­˜é¢†åŸŸçš„æ ‡å¿—å€¼
+int equal_pair[200];//ä¿å­˜ç­‰ä»·å¯¹
 void getdata();
 void scangray();
 void deal_equal_pair(int size,int x,int y);
 void print();
 void outlineFilter();
-void centerFlag();//ĞÅ±êµÆÖĞĞÄÅĞ¶Ï
+void centerFlag();//ä¿¡æ ‡ç¯ä¸­å¿ƒåˆ¤æ–­
 
 
 int main()
 {
 getdata();
 outlineFilter();
-scangray();//Í¼ÏñÉ¨Ãè²¢½øĞĞÁ¬Í¨Óò±ê¼Ç
+scangray();//å›¾åƒæ‰«æå¹¶è¿›è¡Œè¿é€šåŸŸæ ‡è®°
 print();
 centerFlag();
 return 0;
@@ -305,10 +305,10 @@ printf("\n");
 
 void centerFlag()
 {
-int F,i,j,k=0;//F±íÊ¾Á¬Í¨Óò±ê¼ÇÖµ
-int x,x_count=0,count_x=0;//ÖĞĞÄ×ø±ê£¬²ÉÑù¸öÊı£¬²ÉÑùÖµ
+int F,i,j,k=0;//Fè¡¨ç¤ºè¿é€šåŸŸæ ‡è®°å€¼
+int x,x_count=0,count_x=0;//ä¸­å¿ƒåæ ‡ï¼Œé‡‡æ ·ä¸ªæ•°ï¼Œé‡‡æ ·å€¼
 int y,y_count=0,count_y=0;
-int point[3][2];//Ó›ä›ÓÃí±Èİ^µÄüc
+int point[3][2];//è¨˜éŒ„ç”¨ä¾†æ¯”è¼ƒçš„é»
 int pointFlag=0;
 float l1,l2,l3;
 for(F=1;F<=equal_pair[0];++F)
@@ -344,7 +344,7 @@ if(pointFlag==3||pointFlag==9||pointFlag==15){point[k++][0]=i,point[k++][1]==j;}
 l1=float((point[0][0]-x)*(point[0][0]-x)+(point[0][1]-y)*(point[0][1]-y));
 l2=float((point[1][0]-x)*(point[1][0]-x)+(point[1][1]-y)*(point[1][1]-y));
 l3=float((point[2][0]-x)*(point[2][0]-x)+(point[2][1]-y)*(point[2][1]-y));
-if(l1/l2>=0.9&&l1/12<=1.1&&l1/l3>=0.9&&l1/13<=1.1&&l3/l2>=0.9&&l3/12<=1.1)newcount[x][y]=5;//5´ú±íÖĞĞÄ£¬Îó²î±È¿ÉÒÔµ÷½Ú
+if(l1/l2>=0.9&&l1/12<=1.1&&l1/l3>=0.9&&l1/13<=1.1&&l3/l2>=0.9&&l3/12<=1.1)newcount[x][y]=5;//5ä»£è¡¨ä¸­å¿ƒï¼Œè¯¯å·®æ¯”å¯ä»¥è°ƒèŠ‚
 }
 
 }
